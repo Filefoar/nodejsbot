@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const token = process.argv.length == 2 ? process.env.token : '';
+const token = process.argv.length == 2 ? process.env.token : "";
 const welcomeChannelName = "안녕하세요";
 const byeChannelName = "안녕히가세요";
 const welcomeChannelComment = "어서오세요.";
@@ -8,6 +8,7 @@ const byeChannelComment = "안녕히가세요.";
 
 client.on('ready', () => {
   console.log('켰다.');
+  client.user.setPresence({ game: { name: '!help를 쳐보세요.' }, status: 'online' })
 });
 
 client.on("guildMemberAdd", (member) => {
@@ -35,42 +36,45 @@ client.on('message', (message) => {
     return message.reply('pong');
   }
 
-  if(message.content == 'LAT') {
-    let img = 'https://cdn.discordapp.com/attachments/650522596516823088/755306819337060452/AATXAJwxm35wnchyOoMI4Q-lod-XigMpyoJEl_Wy7H63aws900-c-k-c0xffffffff-no-rj-mo.jpg';
+  if(message.content == 'embed') {
+    let img = 'https://cdn.discordapp.com/icons/419671192857739264/6dccc22df4cb0051b50548627f36c09b.webp?size=256';
     let embed = new Discord.RichEmbed()
-      .setTitle('클리오')
-      .setURL('https://www.youtube.com/channel/UC3FtkqW0DhaApggXDFbp8yg')
-      .setAuthor('YouTube', img, 'https://www.youtube.com/channel/UC3FtkqW0DhaApggXDFbp8yg')
+      .setTitle('타이틀')
+      .setURL('http://www.naver.com')
+      .setAuthor('나긋해', img, 'http://www.naver.com')
       .setThumbnail(img)
       .addBlankField()
-      .addField('클리오 유튜브 채널', '리그 오브 레전드 방송을 주로 합니다.')
-      .addField('구독과 팔로우', '해주세요!!', true)
-      .addField('게임류', '리그 오브 레전드\n마인크래프트\n기타 등등\n')
+      .addField('Inline field title', 'Some value here')
+      .addField('Inline field title', 'Some value here', true)
+      .addField('Inline field title', 'Some value here', true)
+      .addField('Inline field title', 'Some value here', true)
+      .addField('Inline field title', 'Some value here1\nSome value here2\nSome value here3\n')
       .addBlankField()
       .setTimestamp()
-      .setFooter('re.config.bot이 만듬')
+      .setFooter('나긋해가 만듬', img)
 
     message.channel.send(embed)
-  } else if(message.content == 'LZ') {
+  } else if(message.content == 'help') {
     let helpImg = 'https://images-ext-1.discordapp.net/external/RyofVqSAVAi0H9-1yK6M8NGy2grU5TWZkLadG-rwqk0/https/i.imgur.com/EZRAPxR.png';
     let commandList = [
-      {name: '욕설', desc: '병○, 시○, 씨○, fuck, fucking, ㅈㄹ'},
-      {name: '패드립', desc: '느금, 느○마, ㄴㄱㅁ, 니엄'},
-      {name: '성드립', desc: '섹○, sex'},
-      {name: '기타', desc: 'ㄵ, ㄴㅈ'},
+      {name: 'ping', desc: '현재 핑 상태'},
+      {name: 'embed', desc: 'embed 예제1'},
+      {name: 'embed2', desc: 'embed 예제2 (help)'},
+      {name: '!전체공지', desc: 'dm으로 전체 공지 보내기'},
+      {name: '!청소', desc: '텍스트 지움'},
     ];
     let commandStr = '';
     let embed = new Discord.RichEmbed()
-      .setAuthor('서버 금지단어 목록', helpImg)
+      .setAuthor('Help of 콜라곰 BOT', helpImg)
       .setColor('#186de6')
-      .setFooter(`경고조치 관리봇!`)
+      .setFooter(`콜라곰 BOT ❤️`)
       .setTimestamp()
     
     commandList.forEach(x => {
       commandStr += `• \`\`${changeCommandStringLength(`${x.name}`)}\`\` : **${x.desc}**\n`;
     });
 
-    embed.addField('서버 금지단어 목록 : ', commandStr);
+    embed.addField('Commands: ', commandStr);
 
     message.channel.send(embed)
   }
